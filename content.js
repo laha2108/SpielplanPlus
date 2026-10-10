@@ -1,0 +1,1 @@
+(async()=>{'use strict';const H=globalThis.HSP;await H.load();await H.initialize();H.api.storage.onChanged.addListener((changes,area)=>{if(area!=='sync')return;Object.entries(changes).forEach(([k,v])=>{if(k in H.defaults)H.cfg[k]=v.newValue??H.defaults[k]});document.getElementById('hsp-controls')?.remove();H.schedule()})})();

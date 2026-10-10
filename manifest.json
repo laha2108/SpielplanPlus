@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "Hockey Spielplan Plus",
+  "short_name": "Spielplan Plus",
+  "version": "3.3.30",
+  "description": "Filtert WHV-Hockeyspielpläne und erstellt personalisierte PDF-Spielpläne.",
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://whv.hockey.de/*"
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "Hockey Spielplan Plus – Einstellungen",
+    "default_popup": "options.html"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://whv.hockey.de/*"
+      ],
+      "js": [
+        "src/core.js",
+        "src/parser.js",
+        "src/standings.js",
+        "src/pdf.js",
+        "src/ui.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
