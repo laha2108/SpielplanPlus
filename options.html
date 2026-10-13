@@ -1,34 +1,38 @@
 <!doctype html>
 <html lang="de">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Hockey Spielplan Plus</title>
     <link rel="stylesheet" href="options.css">
 </head>
-
 <body>
     <main>
-        <h1>Hockey Spielplan Plus 3.3.30</h1>
-        <form id="form"><label>Vereinsname<input id="clubName" required></label><label>Kurzbezeichnungen<textarea
-                    id="clubAliases"></textarea></label><label><input type="radio" name="teamMode" value="all"> Alle
-                Mannschaften des Vereins</label><label><input type="radio" name="teamMode" value="exact"> Nur
-                konfigurierte Mannschaften</label><label>Exakte Mannschaftsnamen<textarea
-                    id="teamNames"></textarea></label>
+        <h1>Hockey Spielplan Plus 3.4.2</h1>
+        <form id="form">
+            <label>Vereinsname<input id="clubName" required></label>
+            <label>Kurzbezeichnungen<textarea id="clubAliases"></textarea></label>
+            <label><input type="radio" name="teamMode" value="all"> Alle Mannschaften des Vereins</label>
+            <label><input type="radio" name="teamMode" value="exact"> Nur konfigurierte Mannschaften</label>
+            <label>Exakte Mannschaftsnamen<textarea id="teamNames"></textarea></label>
             <fieldset>
-                <legend>Funktionen</legend><label><input id="highlightOwnClub" type="checkbox"> Eigene Mannschaft
-                    hervorheben</label><label><input id="showFreeNotice" type="checkbox"> SPIELFREI
-                    anzeigen</label><label><input id="markIncompleteData" type="checkbox"> Fehlende Daten
-                    kennzeichnen</label><label><input id="statisticsEnabled" type="checkbox"> Statistiken
-                    aktivieren</label>
+                <legend>Funktionen</legend>
+                <label><input id="highlightOwnClub" type="checkbox"> Eigene Mannschaft hervorheben</label>
+                <label><input id="showFreeNotice" type="checkbox"> SPIELFREI anzeigen</label>
+                <label><input id="markIncompleteData" type="checkbox"> Fehlende Daten kennzeichnen</label>
+                <label><input id="statisticsEnabled" type="checkbox"> Statistiken aktivieren</label>
+            </fieldset>
+            <fieldset>
+                <legend>ICS-Adressen</legend>
+                <small>Spielortadressen werden ohne Registrierung über OpenStreetMap/Nominatim ermittelt und lokal zwischengespeichert. © OpenStreetMap-Mitwirkende.</small>
             </fieldset>
             <div id="status"></div>
-            <div class="actions"><button id="cancel" type="button" class="secondary">Abbrechen</button><button
-                    type="submit">Speichern</button></div>
+            <div class="actions">
+                <button id="cancel" type="button" class="secondary">Abbrechen</button>
+                <button type="submit">Speichern</button>
+            </div>
         </form>
     </main>
     <script src="options.js"></script>
 </body>
-
 </html>

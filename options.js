@@ -2,8 +2,7 @@
     'use strict';
 
     const api = globalThis.browser || globalThis.chrome;
-
-    const D = {
+    const defaults = {
         clubName: 'Gladbacher HTC',
         clubAliases: ['GHTC'],
         teamMode: 'all',
@@ -13,75 +12,42 @@
         markIncompleteData: false,
         statisticsEnabled: true
     };
-
-    const $ = id => document.getElementById(id);
-
-    const list = value =>
-        String(value || '')
-            .split(/[;,\n]/)
-            .map(item => item.trim())
-            .filter(Boolean);
+    const byId = id => document.getElementById(id);
+    const parseList = value => String(value || '').split(/[;,\n]/).map(item => item.trim()).filter(Boolean);
 
     async function load() {
-        const settings = {
-            ...D,
-            ...(await api.storage.sync.get(D))
-        };
-
-        $('clubName').value = settings.clubName;
-        $('clubAliases').value = settings.clubAliases.join('\n');
-        $('teamNames').value = settings.teamNames.join('\n');
-
-        document.querySelector(
-            `[name=teamMode][value=${settings.teamMode}]`
-        ).checked = true;
-
-        $('highlightOwnClub').checked = settings.highlightOwnClub;
-        $('showFreeNotice').checked = settings.showFreeNotice;
-        $('markIncompleteData').checked = settings.markIncompleteData;
-        $('statisticsEnabled').checked = settings.statisticsEnabled;
+        const settings = { ...defaults, ...(await api.storage.sync.get(defaults)) };
+        byId('clubName').value = settings.clubName;
+        byId('clubAliases').value = settings.clubAliases.join('\n');
+        byId('teamNames').value = settings.teamNames.join('\n');
+        document.querySelector(`[name=teamMode][value=${settings.teamMode}]`).checked = true;
+        byId('highlightOwnClub').checked = settings.highlightOwnClub;
+        byId('showFreeNotice').checked = settings.showFreeNotice;
+        byId('markIncompleteData').checked = settings.markIncompleteData;
+        byId('statisticsEnabled').checked = settings.statisticsEnabled;
     }
 
     function closePage() {
         window.close();
-
-        setTimeout(() => {
-            if (!window.closed) {
-                history.back();
-            }
-        }, 100);
+        setTimeout(() => { if (!window.closed) history.back(); }, 100);
     }
 
     document.addEventListener('DOMContentLoaded', load);
-
-    $('cancel').onclick = closePage;
-
-    $('form').onsubmit = async event => {
+    byId('cancel').onclick = closePage;
+    byId('form').onsubmit = async event => {
         event.preventDefault();
-
-        $('status').textContent = 'Wird gespeichert …';
-
+        byId('status').textContent = 'Wird gespeichert …';
         await api.storage.sync.set({
-            clubName: $('clubName').value.trim(),
-            clubAliases: list($('clubAliases').value),
-            teamMode:
-                document.querySelector('[name=teamMode]:checked')?.value ||
-                'all',
-            teamNames: list($('teamNames').value),
-            highlightOwnClub: $('highlightOwnClub').checked,
-            showFreeNotice: $('showFreeNotice').checked,
-            markIncompleteData: $('markIncompleteData').checked,
-            statisticsEnabled: $('statisticsEnabled').checked
+            clubName: byId('clubName').value.trim(),
+            clubAliases: parseList(byId('clubAliases').value),
+            teamMode: document.querySelector('[name=teamMode]:checked')?.value || 'all',
+            teamNames: parseList(byId('teamNames').value),
+            highlightOwnClub: byId('highlightOwnClub').checked,
+            showFreeNotice: byId('showFreeNotice').checked,
+            markIncompleteData: byId('markIncompleteData').checked,
+            statisticsEnabled: byId('statisticsEnabled').checked
         });
-
-        try {
-            await api.runtime.sendMessage({
-                type: 'HSP_OPTIONS_SAVED'
-            });
-        } catch {
-            // Ignorieren
-        }
-
+        try { await api.runtime.sendMessage({ type: 'HSP_OPTIONS_SAVED' }); } catch {}
         closePage();
     };
 })();

@@ -2,14 +2,15 @@
   "manifest_version": 3,
   "name": "Hockey Spielplan Plus",
   "short_name": "Spielplan Plus",
-  "version": "3.3.30",
-  "description": "Filtert WHV-Hockeyspielpläne und erstellt personalisierte PDF-Spielpläne.",
+  "version": "3.4.6",
+  "description": "Filtert WHV-Hockeyspielpläne und erstellt personalisierte PDF- und ICS-Spielpläne.",
   "permissions": [
     "storage",
     "tabs"
   ],
   "host_permissions": [
-    "https://whv.hockey.de/*"
+    "https://whv.hockey.de/*",
+    "https://nominatim.openstreetmap.org/*"
   ],
   "icons": {
     "16": "icons/icon16.png",
@@ -38,6 +39,7 @@
         "src/standings.js",
         "src/pdf.js",
         "src/ui.js",
+        "src/ics.js",
         "content.js"
       ],
       "run_at": "document_idle"
